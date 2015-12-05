@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ZePlayer</string>
+    <string name="global_sim">Sim</string>
+    <string name="global_nao">Não</string>
+    <string name="main_menu_settings">Configurar</string>
+    <string name="main_caminho_edit_text">Caminho do arquivo</string>
+</resources>
