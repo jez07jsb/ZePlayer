@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.widget.ListViewCompat;
 import android.util.Log;
 
 import java.io.File;

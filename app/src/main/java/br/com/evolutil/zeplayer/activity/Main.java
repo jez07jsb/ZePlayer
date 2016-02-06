@@ -202,6 +202,12 @@ public class Main extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        NotificationUtil.cancelAll(Main.this);
 
         Intent intent = new Intent(this, Mp3Service.class);
         Log.i(TAG, "Iniciando o Service");
