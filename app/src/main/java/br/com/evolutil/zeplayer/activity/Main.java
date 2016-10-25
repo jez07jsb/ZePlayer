@@ -161,7 +161,7 @@ public class Main extends AppCompatActivity {
         searchBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final File ftemp = new File("/storage/extSdCard/");
+                File ftemp = new File("/storage/extSdCard/");
                 Filebrowser fileBrowserSearch = new Filebrowser(Main.this, ftemp);
                 fileBrowserSearch.setFileEndsWith(".mp3");
 
@@ -205,8 +205,8 @@ public class Main extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onResume() {
+        super.onResume();
         NotificationUtil.cancelAll(Main.this);
 
         Intent intent = new Intent(this, Mp3Service.class);
