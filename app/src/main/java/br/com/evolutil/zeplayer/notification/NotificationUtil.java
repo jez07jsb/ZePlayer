@@ -53,7 +53,7 @@ public class NotificationUtil {
         // Cria a notificacao
         NotificationCompat.Builder b = new NotificationCompat.Builder(context);
         if (flag_is_default) {
-            b.setDefaults(Notification.DEFAULT_ALL); // Ativa configuracoes padroes
+            b.setDefaults(Notification.FLAG_NO_CLEAR); // Ativa configuracoes padroes
         }
         b.setSmallIcon(resourceIcon); //Icone
         b.setContentTitle(contentTitle); // Titulo
