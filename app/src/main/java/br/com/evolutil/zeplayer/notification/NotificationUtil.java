@@ -1,12 +1,12 @@
 package br.com.evolutil.zeplayer.notification;
 
-import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.TaskStackBuilder;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 /**
  * Fornece metodos com utilidades para criar notificacoes.
@@ -32,7 +32,7 @@ public class NotificationUtil {
         PendingIntent p = getPendingIntent(context, intent, id);
         // Cria a notificacao
         NotificationCompat.Builder b = new NotificationCompat.Builder(context);
-        b.setDefaults(Notification.DEFAULT_ALL); // Ativa configuracoes padroes
+        b.setDefaults(NotificationCompat.DEFAULT_ALL); // Ativa configuracoes padroes
         b.setSmallIcon(resourceIcon); //Icone
         b.setContentTitle(contentTitle); // Titulo
         b.setContentText(contentText); // Mensagem
@@ -53,7 +53,9 @@ public class NotificationUtil {
         // Cria a notificacao
         NotificationCompat.Builder b = new NotificationCompat.Builder(context);
         if (flag_is_default) {
-            b.setDefaults(Notification.FLAG_NO_CLEAR); // Ativa configuracoes padroes
+            b.setDefaults(NotificationCompat.DEFAULT_ALL); // Ativa configuracoes padroes
+        } else {
+            b.setDefaults(NotificationCompat.FLAG_NO_CLEAR);
         }
         b.setSmallIcon(resourceIcon); //Icone
         b.setContentTitle(contentTitle); // Titulo
@@ -72,7 +74,7 @@ public class NotificationUtil {
         PendingIntent p = getPendingIntent(context, intent, id);
         // Cria a notificacao
         NotificationCompat.Builder b = new NotificationCompat.Builder(context);
-        b.setDefaults(Notification.DEFAULT_ALL); // Ativa configuracoes padroes
+        b.setDefaults(NotificationCompat.DEFAULT_ALL); // Ativa configuracoes padroes
         b.setSmallIcon(resourceIcon); //Icone
         b.setContentTitle(contentTitle); // Titulo
         b.setContentText(contentText); // Mensagem
@@ -89,7 +91,7 @@ public class NotificationUtil {
     public static void create(Context context, int resourceIcon, String contentTitle, String contentText, String contentSubText, int id) {
         // Cria a notificacao
         NotificationCompat.Builder b = new NotificationCompat.Builder(context);
-        b.setDefaults(Notification.DEFAULT_ALL); // Ativa configuracoes padroes
+        b.setDefaults(NotificationCompat.DEFAULT_ALL); // Ativa configuracoes padroes
         b.setSmallIcon(resourceIcon); //Icone
         b.setContentTitle(contentTitle); // Titulo
         b.setContentText(contentText); // Mensagem

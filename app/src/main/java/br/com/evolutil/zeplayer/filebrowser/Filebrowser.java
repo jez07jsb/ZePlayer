@@ -3,9 +3,10 @@ package br.com.evolutil.zeplayer.filebrowser;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Environment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -41,7 +42,7 @@ public class Filebrowser {
     /**
      * @return file dialog
      */
-    public Dialog createFileDialog() {
+    private Dialog createFileDialog() {
         Dialog dialog = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 

@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -22,18 +20,28 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 import java.io.File;
+import java.util.concurrent.Executors;
 
 import br.com.evolutil.zeplayer.R;
-import br.com.evolutil.zeplayer.filebrowser.FileSelectedListener;
-import br.com.evolutil.zeplayer.filebrowser.Filebrowser;
+import br.com.evolutil.zeplayer.config.ConfigUtil;
+import br.com.evolutil.zeplayer.filemusicscan.MusicScan;
+import br.com.evolutil.zeplayer.fragment.MusicListFragment;
+import br.com.evolutil.zeplayer.model.MusicMetaData;
 import br.com.evolutil.zeplayer.notification.NotificationUtil;
 import br.com.evolutil.zeplayer.player.InterfaceMp3;
 import br.com.evolutil.zeplayer.player.Mp3Service;
 
-public class Main extends AppCompatActivity {
+public class Main extends AppCompatActivity implements
+        MusicListFragment.OnClickMusicItemListener{
 
     private static final String TAG = "Main";
+    private static final int NOTIFICATION_ID = 1987;
     private EditText text;
     private ImageButton playBt, stopBt, searchBt;
     private SeekBar seekBar;
@@ -62,9 +70,10 @@ public class Main extends AppCompatActivity {
                 text.setEnabled(false);
 
                 if (interfaceMp3.isPaused()) {
-                    actionPlay(mp3);
+                    if (ConfigUtil.getBoolean(getApplicationContext(), "autoplay")) {
+                        actionPlay(mp3);
+                    }
                 } else {
-
                     playBt.setImageResource(android.R.drawable.ic_media_pause);
                     getIntent().putExtra("BT_PLAY", false);
                 }
@@ -161,24 +170,7 @@ public class Main extends AppCompatActivity {
         searchBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File ftemp = new File("/storage/extSdCard/");
-                Filebrowser fileBrowserSearch = new Filebrowser(Main.this, ftemp);
-                fileBrowserSearch.setFileEndsWith(".mp3");
-
-                fileBrowserSearch.addFileListener(new FileSelectedListener() {
-                    @Override
-                    public void fileSelected(File file) {
-                        try {
-                            String mp3 = file.getPath();
-                            text.setText(mp3);
-                            getIntent().putExtra("LAST_PLAYED", mp3);
-                        } catch (Exception e) {
-                            Log.e(TAG, "File Browser ERROR\n" + e.getMessage(), e);
-                        }
-                    }
-                });
-
-                fileBrowserSearch.showDialog();
+                navegarPara(new MusicListFragment());
             }
         });
 
@@ -202,6 +194,23 @@ public class Main extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        String path_file = "/storage/extSdCard/Music";
+        File f = new File(path_file);
+        if (!f.exists() || !f.canRead()) {
+            f = new File("/storage/ext_sd/Music");
+            if (!f.exists() || !f.canRead()) {
+                f = new File("/mnt/sdcard/Music");
+                if (!f.exists() || !f.canRead()) {
+                    f = new File("/sdcard/Music");
+                    if (!f.exists() || !f.canRead()) {
+                        f = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getPath());
+                    }
+                }
+            }
+        }
+        path_file = f.getPath();
+        new MusicScan(getIntent()).executeScanMp3(path_file);
     }
 
     @Override
@@ -227,7 +236,8 @@ public class Main extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.configurar:
-                createToast("Clicado configurar");
+                Intent settingsIntent = new Intent(Main.this, Settings.class);
+                startActivity(settingsIntent);
                 break;
             default:
         }
@@ -247,10 +257,10 @@ public class Main extends AppCompatActivity {
             NotificationUtil.create(
                     this,
                     intent,
-                    R.mipmap.ic_launcher,
+                    R.drawable.ic_play,
                     "ZePlayer",
                     getMP3Name(mp3),
-                    1,
+                    NOTIFICATION_ID,
                     false
             );
 
@@ -262,6 +272,13 @@ public class Main extends AppCompatActivity {
             stopService(intent);
 
         }
+    }
+
+    private void navegarPara(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_container_bottom, fragment)
+                .commit();
     }
 
     // ++++++++++++++++++++++++ SESSAO EXTRA ++++++++++++++++++++++++++++++
@@ -344,35 +361,30 @@ public class Main extends AppCompatActivity {
         new AsyncTask<Object, Object, Integer>() {
             @Override
             protected Integer doInBackground(Object... params) {
-                Integer p = 0;
+                Integer progress = 0;
                 try {
-                    p = interfaceMp3.getPosition();
+                    if (interfaceMp3 != null) {
+                        progress = interfaceMp3.getPosition();
+                    }
                 } catch (Exception e) {
                     Log.e(TAG, "AsyncTask, player.getPosition() \n" + e.getMessage(), e);
                 }
-                return p;
+                return progress;
             }
 
             @Override
-            protected void onPostExecute(Integer integer) {
-                seekBar.setProgress(integer);
-
+            protected void onPostExecute(Integer progress) {
                 if (interfaceMp3.isPlaying()) {
-
                     Handler h = new Handler();
-
                     Runnable r = new Runnable() {
                         @Override
                         public void run() {
                             updateSeekBar();
                         }
                     };
-
                     h.postDelayed(r, 1000);
-
                 } else {
-
-                    seekBar.setProgress(0);
+                    progress = 0;
                     seekBar.setEnabled(false);
 
                     playBt.setImageResource(android.R.drawable.ic_media_play);
@@ -384,7 +396,18 @@ public class Main extends AppCompatActivity {
                     searchBt.setEnabled(true);
 
                 }
+                seekBar.setProgress(progress);
             }
-        }.execute();
+        }.executeOnExecutor(Executors.newCachedThreadPool());
+    }
+
+    //++++++++++++++++++++ SESSAO INTERFACE ++++++++++++++++++++
+
+
+    @Override
+    public void onClickMusicItem(MusicMetaData music) {
+        text.setText(music.getTitle());
+        getIntent().putExtra("LAST_PLAYED", music.getFilepath());
+        createToast(music.getTitle());
     }
 }

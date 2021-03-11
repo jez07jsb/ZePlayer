@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    app:cardBackgroundColor="@color/purple_dark_rain"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/card_view_music_item_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:src="@drawable/ic_play"
+            app:useCompatPadding="true"
+            app:fabSize="mini" />
+
+        <ImageView
+            android:id="@+id/card_view_music_item_img"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_audiotrack" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/card_view_music_item_fab"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/card_view_music_item_img"
+            android:layout_toEndOf="@id/card_view_music_item_img"
+            android:layout_toLeftOf="@id/card_view_music_item_fab"
+            android:layout_toStartOf="@id/card_view_music_item_fab"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/card_view_music_item_txvw_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/white"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/card_view_music_item_txvw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:text="TextView" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

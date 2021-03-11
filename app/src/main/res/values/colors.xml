@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#9700f6</color>
-    <color name="colorPrimaryDark">#5f0f7f</color>
-    <color name="colorAccent">#9c27b0</color>
 
     <color name="deep_purple">#2f0028</color>
     <color name="material_purple">#9c27b0</color>
-    <color name="material_purple_trans">#7f9c27b0</color>
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="grey25">#e0e0e0</color>
-    <color name="grey40">#a0a0a0</color>
-    <color name="grey50">#808080</color>
 
-    <color name="base_blue">#0070f0</color>
-    <color name="base_blue_dark">#002080</color>
-    <color name="base_blue_accent">#70b0ff</color>
+    <color name="purple_rain">#773f6f</color>
+    <color name="purple_dark_rain">#470f3f</color>
+
 </resources>

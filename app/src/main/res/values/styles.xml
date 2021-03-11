@@ -9,17 +9,14 @@
         <item name="android:colorBackground">@color/deep_purple</item>
     </style>
 
-    <style name="AppThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <!-- AppCompat Definitions -->
-        <item name="colorPrimary">@color/base_blue</item>
-        <item name="colorPrimaryDark">@color/base_blue_dark</item>
-        <item name="colorAccent">@color/base_blue_accent</item>
-        <!--<item name="android:colorBackground">@color/base_blue</item>-->
-    </style>
-
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:background">@color/material_purple</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ToolbarTheme.Dark" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/deep_purple</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColor">@color/white</item>
     </style>
@@ -28,19 +25,6 @@
         <item name="android:background">@color/white</item>
         <item name="android:textColorPrimary">@color/material_purple</item>
         <item name="android:textColor">@color/material_purple</item>
-    </style>
-
-    <style name="ToolbarThemeBase" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorPrimary">@color/base_blue</item>
-        <item name="colorPrimaryDark">@color/base_blue_dark</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="PopupThemeBase" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:background">@color/white</item>
-        <item name="android:textColorPrimary">@color/base_blue</item>
-        <item name="android:textColor">@color/base_blue_dark</item>
     </style>
 
 </resources>
